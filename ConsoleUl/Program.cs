@@ -12,6 +12,7 @@ namespace ConsoleUl
             foreach (var item in car.GetAll())
             {
                 Console.WriteLine(item.DailyPrice);
+
             }
         }
     }
