@@ -15,12 +15,20 @@ namespace ConsoleUl
             CarManager car = new CarManager(new EfCarDal());
             //car.Update(car1);
             //  car.Delete(car1)
-         //   car.Add(car2);
-                       
-            foreach (var cars in car.GetCarDetail())
+            //   car.Add(car2);
+            var result = car.GetAll();
+            if(result.Success)
             {
-                Console.WriteLine(cars.CarName+" -- "+cars.BrandName+" -- "+ cars.ColorName+" -- "+cars.DailyPrice);
+                foreach (var cars in result.Data)
+                {
+                    Console.WriteLine(cars.CarName + " -- " + cars.DailyPrice);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+          
         }
     }
 }

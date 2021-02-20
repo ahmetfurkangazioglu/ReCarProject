@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -16,39 +18,36 @@ namespace Business.Concrete
             _ColorDal = colorDal;
         }
 
-        public void Add(Color color)
+        public IResult Add(Color color)
         {
             if (color.ColorName.Length>2)
             {
                 _ColorDal.Add(color);
-                Console.WriteLine("Color is Added");
+                return new SuccessResult(Messages.ColorAdded);
             }
-            else
-            {
-                Console.WriteLine("Color name cannot be smaller than 2 ");
-            }
+            return new SuccessResult(Messages.ColordNameError);
         }
 
-        public void Delete(Color color)
+        public IResult Delete(Color color)
         {
             _ColorDal.Delete(color);
-            Console.WriteLine("Color is Deleted");
+            return new SuccessResult(Messages.ColorDeleted);
         }
 
-        public List<Color> GetAll()
+        public IDataResult< List<Color>> GetAll()
         {
-            return _ColorDal.GetAll();
+            return new SuccessDataResult<List<Color>>( _ColorDal.GetAll(),Messages.ColorLİsted);
         }
 
-        public List<Color> GetColorByColorId(int ColorId)
+        public IDataResult< List<Color>> GetColorByColorId(int ColorId)
         {
-            return _ColorDal.GetAll(c => c.ColorId == ColorId);
+            return new SuccessDataResult<List<Color>> (_ColorDal.GetAll(c => c.ColorId == ColorId));
         }
 
-        public void Update(Color color)
+        public IResult Update(Color color)
         {
             _ColorDal.Update(color);
-            Console.WriteLine("Color is Updated");
+            return new SuccessResult(Messages.ColorUpdated);
         }
     }
 }
