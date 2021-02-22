@@ -25,5 +25,24 @@ namespace Business.Constants
         public static string ColorUpdated = " Color Updated";
         public static string ColordNameError = "Color name cannot be smaller than 3 ";
         public static string ColorLİsted = "Color Listed";
+
+        public static string UserAdded = " User Added";
+        public static string UserDeleted = " User Deleted";
+        public static string UserUpdated = " User Updated";
+        public static string UserNameError = "User name cannot be smaller than 3 ";      
+        public static string UserLİsted = " User Listed";
+
+        public static string CustomerAdded = " Customer Added";
+        public static string CustomerDeleted = " Customer Deleted";
+        public static string CustomerUpdated = " Customer Updated";
+        public static string CustomerNameError = "Customer name cannot be smaller than 3 ";
+        public static string CustomerLİsted = " Customer Listed";
+
+        public static string RentalAdded = " Rental Added";
+        public static string RentalDeleted = " Rental Deleted";
+        public static string RentalUpdated = " Rental Updated";
+        public static string RentalNameError = "the car is currently rented ";
+        public static string RentalLİsted = " Rental Listed";
+
     }
 }
