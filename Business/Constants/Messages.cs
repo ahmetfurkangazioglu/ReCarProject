@@ -44,5 +44,7 @@ namespace Business.Constants
         public static string RentalNameError = "the car is currently rented ";
         public static string RentalLİsted = " Rental Listed";
 
+        public static string CarImageLimitExceeded = "Araba resim limiti aşıldı";
+
     }
 }
