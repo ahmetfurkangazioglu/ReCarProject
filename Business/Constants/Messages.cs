@@ -6,6 +6,13 @@ namespace Business.Constants
 {
     public static class Messages
     {
+
+        public static string Added = " Added";
+        public static string Deleted = "Deleted";
+        public static string Updated = "Updated";        
+        public static string Lİsted = " Listed";
+
+
         public static string CarAdded = " Car Added";
         public static string CarDeleted = " Car Deleted";
         public static string CarUpdated = " Car Updated";

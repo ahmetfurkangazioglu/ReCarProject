@@ -32,7 +32,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete([FromForm(Name = ("Id"))] int Id)
+        public IActionResult Delete([FromForm(Name =("ıd"))] int Id)
         {
 
             var carImage = _carImageService.Get(Id).Data;
