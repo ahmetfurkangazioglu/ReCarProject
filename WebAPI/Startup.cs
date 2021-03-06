@@ -32,23 +32,18 @@ namespace WebAPI
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }       
+        public IConfiguration Configuration { get; }
 
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
-            services.AddControllers();
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowOrigin",
-                    builder => builder.WithOrigins("https://localhost:44339"));
-            });
-
+            //services.AddSingleton<IProductService, ProductManager>();
+            //services.AddSingleton<IProductDal, EfProductDal>();
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -60,13 +55,14 @@ namespace WebAPI
                         ValidAudience = tokenOptions.Audience,
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
-                    };
-                }); 
-            services.AddDependencyResolvers(new ICoreModule[]
-            {
-                new CoreModule()
-            });         
 
+
+                    };
+                });
+
+            services.AddDependencyResolvers(new ICoreModule[] {
+            new CoreModule()
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,9 +77,9 @@ namespace WebAPI
 
             app.UseRouting();
 
-            app.UseAuthentication(); 
+            app.UseAuthentication();
 
-            app.UseAuthorization();     
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

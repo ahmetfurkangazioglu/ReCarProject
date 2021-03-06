@@ -15,16 +15,13 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (var context = new ReCarProjectContext())
             {
-                var result = from o in context.operationClaims
-                             join u in context.userOperationClaims
-                             on o.Id equals u.OperationClaimId
-                             where (u.Id == user.Id)
-                             select new OperationClaim
-                             {
-                                 Id = o.Id,
-                                 Name = o.Name
-                             };
+                var result = from operationClaim in context.operationClaims
+                             join userOperationClaim in context.userOperationClaims
+                                 on operationClaim.Id equals userOperationClaim.OperationClaimId
+                             where userOperationClaim.UserId == user.Id
+                             select new OperationClaim { Id = operationClaim.Id, Name = operationClaim.Name };
                 return result.ToList();
+
             }
         }
     }
