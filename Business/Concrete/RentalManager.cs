@@ -5,6 +5,7 @@ using Business.ValidationRules.FluentValidation;
 using Core.Aspects.AutoFac.Caching;
 using Core.Aspects.AutoFac.Validation;
 using Core.Utilities;
+using Core.Utilities.Business;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -22,17 +23,17 @@ namespace Business.Concrete
         {
             _IRentalDal = ıRentalDal;
         }
-        
+
         [SecuredOperation("rental.add,admin,moderator")]
         [ValidationAspect(typeof(RentalValidator))]
         [CacheRemoveAspect("IRentalService.Get")]
         public IResult Add(Rental rental)
         {
-            var result = _IRentalDal.GetAll(r => r.CarId == rental.CarId && r.ReturnDate == null);
-           
-            if (result.Count>0)
+            IResult result = BusinessRules.Run(RentControl(rental.CarId));
+            
+            if (result!=null)
             {
-                return new ErrorResult(Messages.RentalNameError);
+                return result;
             }
             _IRentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
@@ -58,7 +59,7 @@ namespace Business.Concrete
         }
 
         [CacheAspect]
-        public IDataResult<List<RentalDetailDto>> GetRentalDetail( )
+        public IDataResult<List<RentalDetailDto>> GetRentalDetail()
         {
             return new SuccessDataResult<List<RentalDetailDto>>(_IRentalDal.GetRentalDetail(), Messages.RentalLİsted);
         }
@@ -70,6 +71,15 @@ namespace Business.Concrete
         {
             _IRentalDal.Update(rental);
             return new SuccessResult(Messages.RentalUpdated);
+        }
+        private IResult RentControl(int Id)
+        {
+            var result = _IRentalDal.GetAll(r => r.CarId == Id && r.ReturnDate == null);
+            if (result.Count>0)
+            {
+                return new ErrorResult(Messages.RentalNameError);
+            }
+            return new SuccessResult();
         }
     }
 }
