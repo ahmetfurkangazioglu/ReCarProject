@@ -61,16 +61,17 @@ namespace Business.Concrete
         }
 
         [CacheAspect]
-        public IDataResult< List<Car>> GetCarsByBrandId(int BranId)
+        public IDataResult< List<CarDetailDto>> GetCarsByBrandId(int BranId)
         {
-            return new SuccessDataResult<List<Car>> (_ICarDal.GetAll(b => b.BrandId == BranId));
+            return new SuccessDataResult<List<CarDetailDto>> (_ICarDal.GetCarDetail(b => b.BrandId == BranId));
         }
 
         
-        public IDataResult< List<Car>> GetCarsByColorId(int CarId)
+        public IDataResult< List<CarDetailDto>> GetCarsByColorId(int CarId)
         {
-            return new SuccessDataResult<List<Car>> (_ICarDal.GetAll(b => b.CarId == CarId));
+            return new SuccessDataResult<List<CarDetailDto>> (_ICarDal.GetCarDetail(b => b.CarId == CarId));
         }
+
 
         [SecuredOperation("admin,car.add,moderator")]
         [ValidationAspect(typeof(CarValidator))]

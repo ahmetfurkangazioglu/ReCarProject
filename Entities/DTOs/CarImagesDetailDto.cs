@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Entities.DTOs
 {
-     public class CarDetailDto:IDto
+    public class CarImagesDetailDto:IDto
     {
-
         public int CarId { get; set; }
         public string CarName { get; set; }
         public string BrandName { get; set; }
@@ -17,6 +16,5 @@ namespace Entities.DTOs
         public string Description { get; set; }
         public string ImagePath { get; set; }
         public DateTime Date { get; set; }
-
     }
 }
