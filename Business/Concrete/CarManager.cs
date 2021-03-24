@@ -19,11 +19,11 @@ namespace Business.Concrete
 {
     public class CarManager : ICarService
     {
-        ICarDal _ICarDal;
+        ICarDal _carDal;
 
         public CarManager(ICarDal ıCarDal)
         {
-            _ICarDal = ıCarDal;
+            _carDal = ıCarDal;
         }
 
         [SecuredOperation("admin,car.add,moderator")]
@@ -31,7 +31,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
         {       
-                _ICarDal.Add(car);
+                _carDal.Add(car);
                 return new SuccessResult(Messages.CarAdded);           
         }
 
@@ -39,7 +39,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Delete(Car car)
         {
-            _ICarDal.Delete(car);
+            _carDal.Delete(car);
             return new SuccessResult(Messages.CarDeleted);
         }
 
@@ -52,33 +52,41 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTimer);
             }         
-            return new SuccessDataResult<List<Car>>(_ICarDal.GetAll(),Messages.CarLİsted);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.CarLİsted);
         }
 
         public IDataResult< List<CarDetailDto>> GetCarDetail()
         {
-            return new SuccessDataResult<List<CarDetailDto>> ( _ICarDal.GetCarDetail(),Messages.CarLİsted);
+            return new SuccessDataResult<List<CarDetailDto>> ( _carDal.GetCarDetail(),Messages.CarLİsted);
         }
 
         [CacheAspect]
-        public IDataResult< List<CarDetailDto>> GetCarsByBrandId(int BranId)
+        public IDataResult< List<CarDetailDto>> GetCarsByBrandId(int Id)
         {
-            return new SuccessDataResult<List<CarDetailDto>> (_ICarDal.GetCarDetail(b => b.BrandId == BranId));
+            return new SuccessDataResult<List<CarDetailDto>> (_carDal.GetCarDetail(b => b.BrandId == Id));
         }
 
-        
-        public IDataResult< List<CarDetailDto>> GetCarsByColorId(int CarId)
+        public IDataResult<List<CarDetailDto>> GetCarsByColorId(int Id)
         {
-            return new SuccessDataResult<List<CarDetailDto>> (_ICarDal.GetCarDetail(b => b.CarId == CarId));
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetail(b => b.ColorId == Id));
         }
 
+        public IDataResult<List<CarDetailDto>> GetCarsByCarId(int Id)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetail(b => b.CarId == Id));
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarsByFilter(int brandId,int colorId)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetail(b => b.BrandId == brandId && b.ColorId==colorId));
+        }
 
         [SecuredOperation("admin,car.add,moderator")]
         [ValidationAspect(typeof(CarValidator))]
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(Car car)
         {
-            _ICarDal.Update(car);
+            _carDal.Update(car);
             return new SuccessResult(Messages.CarUpdated);
         }
 

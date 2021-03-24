@@ -15,8 +15,8 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (ReCarProjectContext context = new ReCarProjectContext())
             {
-                var result = from u in context.users
-                             join c in context.customers on u.Id equals c.UserId
+                var result = from u in context.Users
+                             join c in context.Customers on u.Id equals c.UserId
                              select new CustomerDetailDto
                              {
                                  UserId = u.Id,

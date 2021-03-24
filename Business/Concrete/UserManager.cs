@@ -16,25 +16,25 @@ namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
-        IUserDal _IUserDal;
+        IUserDal _userDal;
 
         public UserManager(IUserDal ıUserDal)
         {
-            _IUserDal = ıUserDal;
+            _userDal = ıUserDal;
         }
 
         [ValidationAspect(typeof(UserValidator))]      
         [CacheRemoveAspect("IUserService.Get")]
         public IResult Add(User user)
         {         
-           _IUserDal.Add(user);
+           _userDal.Add(user);
             return new SuccessResult(Messages.UserAdded);          
         }
 
         [CacheRemoveAspect("IUserService.Get")]
         public IResult Delete(User user)
         {
-            _IUserDal.Delete(user);
+            _userDal.Delete(user);
             return new ErrorResult(Messages.UserDeleted);
         }
 
@@ -42,33 +42,33 @@ namespace Business.Concrete
         [CacheAspect]
         public IDataResult<List<User>> GetAll()
         {
-            return new SuccessDataResult<List<User>>(_IUserDal.GetAll(), Messages.UserLİsted);
+            return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.UserLİsted);
         }
 
         [SecuredOperation("user.list,admin,moderator")]
         [CacheAspect]
         public User GetByMail(string email)
         {
-            return _IUserDal.Get(u => u.Email == email);
+            return _userDal.Get(u => u.Email == email);
         }
 
         [SecuredOperation("user.list,admin,moderator")]
         public IDataResult<User> GetByUserId(int Id)
         {
-            return new SuccessDataResult<User>(_IUserDal.Get(u => u.Id == Id),Messages.UserLİsted);
+            return new SuccessDataResult<User>(_userDal.Get(u => u.Id == Id),Messages.UserLİsted);
         }
 
         [SecuredOperation("user.list,admin,moderator")]
         public List<OperationClaim> GetClaims(User user)
         {
-            return _IUserDal.GetClaims(user);
+            return _userDal.GetClaims(user);
         }
 
         [ValidationAspect(typeof(UserValidator))]
         [CacheRemoveAspect("IUserService.Get")]
         public IResult Update(User user)
         {
-            _IUserDal.Update(user);
+            _userDal.Update(user);
             return new SuccessResult(Messages.UserUpdated);
         }
     }

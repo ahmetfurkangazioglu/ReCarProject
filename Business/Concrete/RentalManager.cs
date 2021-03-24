@@ -17,11 +17,11 @@ namespace Business.Concrete
 {
     public class RentalManager : IRentalService
     {
-        IRentalDal _IRentalDal;
+        IRentalDal _rentalDal;
 
         public RentalManager(IRentalDal ıRentalDal)
         {
-            _IRentalDal = ıRentalDal;
+            _rentalDal = ıRentalDal;
         }
 
         [SecuredOperation("rental.add,admin,moderator")]
@@ -35,7 +35,7 @@ namespace Business.Concrete
             {
                 return result;
             }
-            _IRentalDal.Add(rental);
+            _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
         }
 
@@ -43,25 +43,25 @@ namespace Business.Concrete
         [CacheRemoveAspect("IRentalService.Get")]
         public IResult Delete(Rental rental)
         {
-            _IRentalDal.Delete(rental);
+            _rentalDal.Delete(rental);
             return new ErrorResult(Messages.RentalDeleted);
         }
 
         [CacheAspect]
         public IDataResult<List<Rental>> GetAll()
         {
-            return new SuccessDataResult<List<Rental>>(_IRentalDal.GetAll(), Messages.RentalLİsted);
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalListed);
         }
 
-        public IDataResult<Rental> GetByRentailId(int Id)
+        public IDataResult<Rental> GetByRentalId(int Id)
         {
-            return new SuccessDataResult<Rental>(_IRentalDal.Get(u => u.Id == Id), Messages.RentalLİsted);
+            return new SuccessDataResult<Rental>(_rentalDal.Get(u => u.Id == Id), Messages.RentalListed);
         }
 
         [CacheAspect]
         public IDataResult<List<RentalDetailDto>> GetRentalDetail()
         {
-            return new SuccessDataResult<List<RentalDetailDto>>(_IRentalDal.GetRentalDetail(), Messages.RentalLİsted);
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetail(), Messages.RentalListed);
         }
 
         [SecuredOperation("rental.update,admin,moderator")]
@@ -69,12 +69,12 @@ namespace Business.Concrete
         [CacheRemoveAspect("IRentalService.Get")]
         public IResult Update(Rental rental)
         {
-            _IRentalDal.Update(rental);
+            _rentalDal.Update(rental);
             return new SuccessResult(Messages.RentalUpdated);
         }
         private IResult RentControl(int Id)
         {
-            var result = _IRentalDal.GetAll(r => r.CarId == Id && r.ReturnDate == null);
+            var result = _rentalDal.GetAll(r => r.CarId == Id && r.ReturnDate == null);
             if (result.Count>0)
             {
                 return new ErrorResult(Messages.RentalNameError);

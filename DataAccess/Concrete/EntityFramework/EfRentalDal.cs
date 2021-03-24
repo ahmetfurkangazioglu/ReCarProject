@@ -18,10 +18,10 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (ReCarProjectContext context = new ReCarProjectContext())
             {
-                var result = from r in filter == null ? context.rentals : context.rentals.Where(filter)
-                             join c in context.cars on r.CarId equals c.CarId
-                             join cu in context.customers on r.CustomerId equals cu.CustomerId
-                             join u in context.users on cu.UserId equals u.Id
+                var result = from r in filter == null ? context.Rentals : context.Rentals.Where(filter)
+                             join c in context.Cars on r.CarId equals c.CarId
+                             join cu in context.Customers on r.CustomerId equals cu.CustomerId
+                             join u in context.Users on cu.UserId equals u.Id
                              select new RentalDetailDto
                              {
                                  CarId = c.CarId,

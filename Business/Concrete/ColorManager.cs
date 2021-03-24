@@ -14,18 +14,18 @@ namespace Business.Concrete
 {
     public class ColorManager : IColorService
     {
-        IColorDal _ColorDal;
+        IColorDal _colorDal;
 
         public ColorManager(IColorDal colorDal)
         {
-            _ColorDal = colorDal;
+            _colorDal = colorDal;
         }
 
         [SecuredOperation("color.add,admin,moderator")]
         [ValidationAspect(typeof(ColorValidator))]
         public IResult Add(Color color)
         {         
-             _ColorDal.Add(color);
+             _colorDal.Add(color);
              return new SuccessResult(Messages.ColorAdded);         
            
         }
@@ -33,25 +33,25 @@ namespace Business.Concrete
         [SecuredOperation("color.delete,admin,moderator")]
         public IResult Delete(Color color)
         {
-            _ColorDal.Delete(color);
+            _colorDal.Delete(color);
             return new SuccessResult(Messages.ColorDeleted);
         }
 
         public IDataResult< List<Color>> GetAll()
         {
-            return new SuccessDataResult<List<Color>>( _ColorDal.GetAll(),Messages.ColorLİsted);
+            return new SuccessDataResult<List<Color>>( _colorDal.GetAll(),Messages.ColorLİsted);
         }
 
         public IDataResult< List<Color>> GetColorByColorId(int ColorId)
         {
-            return new SuccessDataResult<List<Color>> (_ColorDal.GetAll(c => c.ColorId == ColorId));
+            return new SuccessDataResult<List<Color>> (_colorDal.GetAll(c => c.ColorId == ColorId));
         }
 
         [SecuredOperation("color.update,admin,moderator")]
         [ValidationAspect(typeof(ColorValidator))]
         public IResult Update(Color color)
         {
-            _ColorDal.Update(color);
+            _colorDal.Update(color);
             return new SuccessResult(Messages.ColorUpdated);
         }
     }

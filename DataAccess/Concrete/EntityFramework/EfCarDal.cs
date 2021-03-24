@@ -17,10 +17,10 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (ReCarProjectContext context = new ReCarProjectContext())
             {
-                var result = from c in filter == null ? context.cars : context.cars.Where(filter)
-                             join b in context.brands on c.BrandId equals b.BrandId
-                             join co in context.colors on c.ColorId equals co.ColorId
-                             join i in context.carImages on c.CarId equals i.CarId
+                var result = from c in filter == null ? context.Cars : context.Cars.Where(filter)
+                             join b in context.Brands on c.BrandId equals b.BrandId
+                             join co in context.Colors on c.ColorId equals co.ColorId
+                            
                              select new CarDetailDto
                              {
                                  CarId = c.CarId,
@@ -30,8 +30,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  ModelYear = c.ModelYear,
                                  DailyPrice = c.DailyPrice,
                                  Description = c.Description,
-                                 Date = i.Date,
-                                 ImagePath = (from a in context.carImages where a.CarId == c.CarId select a.ImagePath).FirstOrDefault()
+                                 
+                                 ImagePath = (from a in context.CarImages where c.CarId == a.CarId select a.ImagePath).FirstOrDefault()
 
 
                              };

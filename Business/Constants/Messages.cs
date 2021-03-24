@@ -51,7 +51,7 @@ namespace Business.Constants
         public static string RentalDeleted = " Rental Deleted";
         public static string RentalUpdated = " Rental Updated";
         public static string RentalNameError = "the car is currently rented ";
-        public static string RentalLİsted = " Rental Listed";
+        public static string RentalListed = " Rental Listed";
 
         public static string CarImageLimitExceeded = "Araba resim limiti aşıldı";
         public static string UserNotFound = "Kullanıcı bulunamadı";

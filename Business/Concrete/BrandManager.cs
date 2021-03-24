@@ -16,11 +16,11 @@ namespace Business.Concrete
    public  class BrandManager : IBrandService
     {
 
-        IBrandDal _BrandDal;
+        IBrandDal _brandDal;
 
         public BrandManager(IBrandDal brandDal)
         {
-            _BrandDal = brandDal;
+            _brandDal = brandDal;
         }
 
         [SecuredOperation("brand.add,moderator,admin")]
@@ -28,7 +28,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IBrandService.Get")]
         public IResult Add(Brand brand)
         {
-            _BrandDal.Add(brand);
+            _brandDal.Add(brand);
             return new SuccessResult(Messages.BrandAdded);                                                         
         }
 
@@ -36,19 +36,19 @@ namespace Business.Concrete
         [CacheRemoveAspect("IBrandService.Get")]
         public IResult Delete(Brand brand)
         {
-            _BrandDal.Delete(brand);
+            _brandDal.Delete(brand);
             return new SuccessResult(Messages.BrandDeleted);
         }
 
         [CacheAspect]
         public IDataResult< List<Brand>> GetAll()
         {
-            return new SuccessDataResult<List<Brand>>(_BrandDal.GetAll(), Messages.BrandLİsted);
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.BrandLİsted);
         }
 
         public IDataResult< List<Brand>> GetBrandByBrandId(int BranId)
         {
-            return new SuccessDataResult<List<Brand>> (_BrandDal.GetAll(b => b.BrandId == BranId));
+            return new SuccessDataResult<List<Brand>> (_brandDal.GetAll(b => b.BrandId == BranId));
         }
 
         [SecuredOperation("brand.update,moderator,admin")]
@@ -56,7 +56,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IBrandService.Get")]
         public IResult Update(Brand brand)
         {
-            _BrandDal.Update(brand);
+            _brandDal.Update(brand);
             return new SuccessResult(Messages.BrandUpdated);
         }
     }
