@@ -72,6 +72,30 @@ namespace Business.Concrete
             _rentalDal.Update(rental);
             return new SuccessResult(Messages.RentalUpdated);
         }
+
+        public IResult CheckRule(Rental rental)
+        {
+            IResult result = BusinessRules.Run(RentalRule(rental));
+
+            if (result != null)
+            {
+                return result;
+            }
+            return new SuccessResult();
+        }
+
+
+
+
+        private IResult RentalRule(Rental rental)
+        {
+            var result = _rentalDal.GetAll(r=>r.CarId==rental.CarId && ((rental.RentDate> r.RentDate || rental.ReturnDate >= r.RentDate)&& rental.RentDate <= r.ReturnDate));
+            if (rental.RentDate < DateTime.Now || result.Count>0)
+            {
+                return new ErrorResult();
+            }
+            return new SuccessResult();
+        }
         private IResult RentControl(int Id)
         {
             var result = _rentalDal.GetAll(r => r.CarId == Id && r.ReturnDate == null);

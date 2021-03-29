@@ -81,7 +81,18 @@ namespace WebAPI.Controllers
                 return Ok(result);
             }
             return BadRequest(result);
-        }    
-        
+        }
+
+
+        [HttpPost("checkrule")]
+        public IActionResult CheckRule(Rental rental)
+        {
+            var result = _rentalService.CheckRule(rental);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }
