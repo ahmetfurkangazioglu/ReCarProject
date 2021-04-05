@@ -41,6 +41,9 @@ namespace Business.DependencyResolvers.AutoFac
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
+            builder.RegisterType<FakePaymentManager>().As<IFakePaymentService>().SingleInstance();
+            builder.RegisterType<EfFakePaymentDal>().As<IFakePaymentDal>().SingleInstance();
+
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()

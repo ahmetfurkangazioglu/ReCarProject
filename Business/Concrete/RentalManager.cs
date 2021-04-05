@@ -24,7 +24,7 @@ namespace Business.Concrete
             _rentalDal = ıRentalDal;
         }
 
-        [SecuredOperation("rental.add,admin,moderator")]
+       // [SecuredOperation("rental.add,admin,moderator")]
         [ValidationAspect(typeof(RentalValidator))]
         [CacheRemoveAspect("IRentalService.Get")]
         public IResult Add(Rental rental)
@@ -75,13 +75,14 @@ namespace Business.Concrete
 
         public IResult CheckRule(Rental rental)
         {
+
             IResult result = BusinessRules.Run(RentalRule(rental));
 
             if (result != null)
             {
                 return result;
             }
-            return new SuccessResult();
+            return new SuccessResult("Başarılı işlem");
         }
 
 
@@ -89,10 +90,12 @@ namespace Business.Concrete
 
         private IResult RentalRule(Rental rental)
         {
-            var result = _rentalDal.GetAll(r=>r.CarId==rental.CarId && ((rental.RentDate> r.RentDate || rental.ReturnDate >= r.RentDate)&& rental.RentDate <= r.ReturnDate));
+            var result = _rentalDal.GetAll(r=>r.CarId==rental.CarId && 
+            ((rental.RentDate >= r.RentDate || rental.ReturnDate >= r.RentDate)
+            && rental.RentDate <= r.ReturnDate));
             if (rental.RentDate < DateTime.Now || result.Count>0)
             {
-                return new ErrorResult();
+                return new ErrorResult("Hatalı işlem");
             }
             return new SuccessResult();
         }
