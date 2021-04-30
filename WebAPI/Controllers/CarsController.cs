@@ -41,6 +41,17 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("getcarfilterdetail")]
+        public IActionResult GetCarFilterDetail()
+        {
+            var result = _carService.GetCarFilterDetail();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpPost("add")]
         public IActionResult Add(Car car)
         {
@@ -84,11 +95,32 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("brandfilterid")]
+        public IActionResult GetByFilterBrandId(int Id)
+        {
+            var result = _carService.GetCarsFilterByBrandId(Id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
 
         [HttpGet("colorid")]
         public IActionResult GetByColorId(int Id)
         {
             var result = _carService.GetCarsByColorId(Id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("colorfilterid")]
+        public IActionResult GetByFilterColorId(int Id)
+        {
+            var result = _carService.GetCarsFilterByColorId(Id);
             if (result.Success)
             {
                 return Ok(result);
@@ -111,6 +143,19 @@ namespace WebAPI.Controllers
         public IActionResult GetCarDetailByFilter(int brandId,int ColorId)
         {
             var result = _carService.GetCarsByFilter(brandId,ColorId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
+
+        [HttpGet("getCarDetailFilterByFilter")]
+        public IActionResult GetCarDetailFilterByFilter(int brandId, int ColorId)
+        {
+            var result = _carService.GetCarsFilterByFilter(brandId, ColorId);
             if (result.Success)
             {
                 return Ok(result);

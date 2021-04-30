@@ -95,7 +95,7 @@ namespace Business.Concrete
             && rental.RentDate <= r.ReturnDate));
             if (rental.RentDate < DateTime.Now || result.Count>0)
             {
-                return new ErrorResult("Hatalı işlem");
+                return new ErrorResult("Bu araç seçili tarihler arasında kiralanmış, Lütfen başka bir tarih seçiniz.");
             }
             return new SuccessResult();
         }
