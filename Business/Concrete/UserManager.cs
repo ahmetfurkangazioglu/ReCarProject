@@ -38,27 +38,27 @@ namespace Business.Concrete
             return new ErrorResult(Messages.UserDeleted);
         }
 
-        [SecuredOperation("user.list,admin,moderator")]
+      //  [SecuredOperation("user.list,admin,moderator")]
         [CacheAspect]
         public IDataResult<List<User>> GetAll()
         {
             return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.UserLİsted);
         }
 
-        [SecuredOperation("user.list,admin,moderator")]
+       // [SecuredOperation("user.list,admin,moderator")]
         [CacheAspect]
         public User GetByMail(string email)
         {
             return _userDal.Get(u => u.Email == email);
         }
 
-        [SecuredOperation("user.list,admin,moderator")]
+      //  [SecuredOperation("user.list,admin,moderator")]
         public IDataResult<User> GetByUserId(int Id)
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.Id == Id),Messages.UserLİsted);
         }
 
-        [SecuredOperation("user.list,admin,moderator")]
+      //  [SecuredOperation("user.list,admin,moderator")]
         public List<OperationClaim> GetClaims(User user)
         {
             return _userDal.GetClaims(user);
