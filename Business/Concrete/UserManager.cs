@@ -47,9 +47,9 @@ namespace Business.Concrete
 
        // [SecuredOperation("user.list,admin,moderator")]
         [CacheAspect]
-        public User GetByMail(string email)
+        public IDataResult<User>GetByMail(string email)
         {
-            return _userDal.Get(u => u.Email == email);
+            return new SuccessDataResult<User>( _userDal.Get(u => u.Email == email),Messages.UserLİsted);
         }
 
       //  [SecuredOperation("user.list,admin,moderator")]
@@ -70,6 +70,11 @@ namespace Business.Concrete
         {
             _userDal.Update(user);
             return new SuccessResult(Messages.UserUpdated);
+        }
+
+        public IDataResult<List<User>> GetByEmail(string email)
+        {
+            return new SuccessDataResult<List<User>>(_userDal.GetAll(u => u.Email == email), Messages.UserLİsted);
         }
     }
 }
