@@ -85,5 +85,16 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpGet("userdetailuserId")]
+        public IActionResult GetUserDetailByUserId(int userId)
+        {
+            var result = _userService.GetUserDetailByUserId(userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }

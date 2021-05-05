@@ -1,6 +1,7 @@
 ﻿using Core.Entities.Concrete;
 using Core.Utilities;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,6 +18,7 @@ namespace Business.Abstract
         List<OperationClaim> GetClaims(User user);
         IDataResult<User> GetByMail(string email);
         IDataResult<List<User>> GetByEmail(string email);
+        IDataResult<List<UserDetailDto>> GetUserDetailByUserId(int userId);
 
     }
 }

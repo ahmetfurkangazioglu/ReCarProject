@@ -1,5 +1,4 @@
 ﻿using Core.DataAccess.EntityFramework;
-using Core.Entities.Concrete;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
@@ -11,7 +10,7 @@ namespace DataAccess.Abstract
 {
      public interface ICustomerDal:IEntityRepository<Customer>
     {
-        List<CustomerDetailDto> GetCustomerDetail(Expression<Func<User, bool>> filter = null);
+        List<CustomerDetailDto> GetCustomerDetail();
        
     }
 }
