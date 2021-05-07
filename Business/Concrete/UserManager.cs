@@ -69,7 +69,12 @@ namespace Business.Concrete
         [CacheRemoveAspect("IUserService.Get")]
         public IResult Update(User user)
         {
+            var result = _userDal.Get(u => u.Id == user.Id);
+            user.PasswordHash = result.PasswordHash;
+            user.PasswordSalt = result.PasswordSalt;
+
             _userDal.Update(user);
+
             return new SuccessResult(Messages.UserUpdated);
         }
 
