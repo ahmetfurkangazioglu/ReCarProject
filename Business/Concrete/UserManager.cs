@@ -65,7 +65,7 @@ namespace Business.Concrete
             return _userDal.GetClaims(user);
         }
 
-        [ValidationAspect(typeof(UserValidator))]
+       [ValidationAspect(typeof(UserValidator))]
         [CacheRemoveAspect("IUserService.Get")]
         public IResult Update(User user)
         {
@@ -78,6 +78,14 @@ namespace Business.Concrete
             return new SuccessResult(Messages.UserUpdated);
         }
 
+        [ValidationAspect(typeof(UserValidator))]
+        [CacheRemoveAspect("IUserService.Get")]
+        public IResult PasswordUpdate(User user)
+        {       
+            _userDal.Update(user);
+
+            return new SuccessResult(Messages.UserUpdated);
+        }
         public IDataResult<List<User>> GetByEmail(string email)
         {
             return new SuccessDataResult<List<User>>(_userDal.GetAll(u => u.Email == email), Messages.UserLİsted);

@@ -40,6 +40,31 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
+
+        public IDataResult<User> UpdatePassword(UserPasswordUpdateDto userPasswordUpdateDto , string password)
+        {
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            var result = _userService.GetByUserId(userPasswordUpdateDto.UserId);
+            var user = new User
+            {
+                Id=result.Data.Id,
+                Email = result.Data.Email,
+                FirstName = result.Data.FirstName,
+                LastName = result.Data.LastName,
+                PhoneNumber = result.Data.PhoneNumber,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                Status = true
+            };
+            if (!HashingHelper.VerifyPasswordHash(userPasswordUpdateDto.currentPassword,result.Data.PasswordHash,result.Data.PasswordSalt))
+            {
+                return new ErrorDataResult<User>(Messages.PasswordError);
+            }
+            _userService.PasswordUpdate(user);
+            return new SuccessDataResult<User>(user,"Şifre güncellendi");
+        }
+
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
             var userToCheck = _userService.GetByMail(userForLoginDto.Email);
@@ -63,7 +88,8 @@ namespace Business.Concrete
 
         public IResult UserExists(string email)
         {
-            if (_userService.GetByMail(email) != null)
+            
+            if (_userService.GetByMail(email).Data != null)
             {
                 return new ErrorResult(Messages.UserAlreadyExists);
             }
