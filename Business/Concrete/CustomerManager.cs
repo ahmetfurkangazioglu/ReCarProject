@@ -39,7 +39,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.CustomerLİsted);
         }
 
-        public IDataResult<Customer> GetByUserId(int Id)
+        public IDataResult<Customer> GetByCustomerId(int Id)
         {
             return new SuccessDataResult<Customer>(_customerDal.Get(u => u.CustomerId == Id), Messages.CustomerLİsted);
         }
@@ -54,6 +54,11 @@ namespace Business.Concrete
         {
             _customerDal.Update(customer);
             return new SuccessResult(Messages.CustomerUpdated);
+        }
+
+        public IDataResult<Customer> GetByUserId(int UserId)
+        {
+            return new SuccessDataResult<Customer>(_customerDal.Get(u => u.UserId == UserId), Messages.CustomerLİsted);
         }
     }
 }

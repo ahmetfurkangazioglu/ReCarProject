@@ -65,7 +65,18 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("Customerid")]
-        public IActionResult GetByBrandId(int Id)
+        public IActionResult GetByCustomerId(int Id)
+        {
+            var result = _customerService.GetByCustomerId(Id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("userid")]
+        public IActionResult GetByUserId(int Id)
         {
             var result = _customerService.GetByUserId(Id);
             if (result.Success)
