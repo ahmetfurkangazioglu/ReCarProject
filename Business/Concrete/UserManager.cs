@@ -65,7 +65,12 @@ namespace Business.Concrete
             return _userDal.GetClaims(user);
         }
 
-       [ValidationAspect(typeof(UserValidator))]
+        public IDataResult<List<OperationClaim>> GetUserClaims(User user)
+        {
+            return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
+        }
+
+        [ValidationAspect(typeof(UserValidator))]
         [CacheRemoveAspect("IUserService.Get")]
         public IResult Update(User user)
         {

@@ -42,11 +42,15 @@ namespace DataAccess.Concrete.EntityFramework
                                  Email = u.Email,
                                  PhoneNumber = u.PhoneNumber,
                                  CompanyName = (from c in context.Customers where c.UserId == u.Id select c.CompanyName).FirstOrDefault(),
-                                 Status = u.Status
+                                 Status = u.Status,
+                                 Name = (from o in context.Users 
+                                         join b in context.UserOperationClaims on u.Id equals b.UserId 
+                                         join a in context.OperationClaims on b.OperationClaimId equals a.Id where a.Name=="admin" select a.Name).FirstOrDefault()
+                                 
 
                              };
                 return result.ToList();
             }
         }
     }
-}
+}>

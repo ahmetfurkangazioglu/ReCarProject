@@ -15,5 +15,6 @@ namespace Entities.DTOs
         public bool Status { get; set; }
         public string CompanyName { get; set; }
         public string PhoneNumber { get; set; }
+        public string Name { get; set; }
     }
 }
